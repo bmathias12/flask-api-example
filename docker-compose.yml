@@ -1,6 +1,9 @@
 version: '3'
 services:
   web:
+    container_name: api
     build: ./web
     ports:
       - "5000:5000"
+    volumes:
+        - ./web/src:/app/src
