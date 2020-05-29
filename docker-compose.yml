@@ -6,4 +6,25 @@ services:
     ports:
       - "5000:5000"
     volumes:
-        - ./web/src:/app/src
+      - ./web/src:/app/src
+    depends_on:
+      - mongodb
+    networks:
+      - backend
+
+  mongodb:
+    image: mongo:4.2.7
+    container_name: mongodb
+    restart: unless-stopped
+    command: mongod --auth
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongodbuser
+      MONGO_INITDB_ROOT_PASSWORD: thisisastrongpassword
+      MONGO_INITDB_DATABASE: flaskdb
+      MONGODB_DATA_DIR: /data/db
+      MONGODB_LOG_DIR: /dev/null
+    volumes:
+        - ./database/data:/data/db
+networks:
+  backend:
+    driver: bridge
