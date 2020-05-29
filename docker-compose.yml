@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
   web:
     container_name: api
@@ -19,7 +19,7 @@ services:
     command: mongod --auth
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongodbuser
-      MONGO_INITDB_ROOT_PASSWORD: thisisastrongpassword
+      MONGO_INITDB_ROOT_PASSWORD: /run/secrets/mongo_root_password
       MONGO_INITDB_DATABASE: flaskdb
       MONGODB_DATA_DIR: /data/db
       MONGODB_LOG_DIR: /dev/null
@@ -28,3 +28,7 @@ services:
 networks:
   backend:
     driver: bridge
+
+secrets:
+  mongo_root_password:
+    file: db_password.txt
